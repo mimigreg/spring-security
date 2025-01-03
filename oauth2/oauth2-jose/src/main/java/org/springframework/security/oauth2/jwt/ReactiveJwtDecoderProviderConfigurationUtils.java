@@ -69,7 +69,7 @@ final class ReactiveJwtDecoderProviderConfigurationUtils {
 	static Mono<Set<JWSAlgorithm>> getJWSAlgorithms(ReactiveRemoteJWKSource jwkSource) {
 		JWKMatcher jwkMatcher = new JWKMatcher.Builder().publicOnly(true)
 			.keyUses(KeyUse.SIGNATURE, null)
-			.keyTypes(KeyType.RSA, KeyType.EC)
+			.keyTypes(KeyType.RSA, KeyType.EC, KeyType.OKP)
 			.build();
 		return jwkSource.get(new JWKSelector(jwkMatcher)).map((jwks) -> {
 			Set<JWSAlgorithm> jwsAlgorithms = new HashSet<>();
@@ -84,6 +84,9 @@ final class ReactiveJwtDecoderProviderConfigurationUtils {
 					}
 					else if (jwk.getKeyType() == KeyType.EC) {
 						jwsAlgorithms.addAll(JWSAlgorithm.Family.EC);
+					}
+					else if (jwk.getKeyType() == KeyType.OKP) {
+						jwsAlgorithms.addAll(JWSAlgorithm.Family.ED);
 					}
 				}
 			}

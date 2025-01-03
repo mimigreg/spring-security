@@ -77,7 +77,12 @@ public enum SignatureAlgorithm implements JwsAlgorithm {
 	/**
 	 * RSASSA-PSS using SHA-512 and MGF1 with SHA-512 (Optional)
 	 */
-	PS512(JwsAlgorithms.PS512);
+	PS512(JwsAlgorithms.PS512),
+
+	/**
+	 * EdDSA (Optional)
+	 */
+	EDDSA(JwsAlgorithms.EDDSA),;
 
 	private final String name;
 

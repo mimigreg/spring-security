@@ -113,7 +113,7 @@ final class JwtDecoderProviderConfigurationUtils {
 	static <C extends SecurityContext> Set<JWSAlgorithm> getJWSAlgorithms(JWKSource<C> jwkSource) {
 		JWKMatcher jwkMatcher = new JWKMatcher.Builder().publicOnly(true)
 			.keyUses(KeyUse.SIGNATURE, null)
-			.keyTypes(KeyType.RSA, KeyType.EC)
+			.keyTypes(KeyType.RSA, KeyType.EC, KeyType.OKP)
 			.build();
 		Set<JWSAlgorithm> jwsAlgorithms = new HashSet<>();
 		try {
@@ -129,6 +129,9 @@ final class JwtDecoderProviderConfigurationUtils {
 					}
 					else if (jwk.getKeyType() == KeyType.EC) {
 						jwsAlgorithms.addAll(JWSAlgorithm.Family.EC);
+					}
+					else if (jwk.getKeyType() == KeyType.OKP) {
+						jwsAlgorithms.addAll(JWSAlgorithm.Family.ED);
 					}
 				}
 			}

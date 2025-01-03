@@ -57,6 +57,17 @@ public class JwtDecoderProviderConfigurationUtilsTests {
 	}
 
 	@Test
+	public void getSignatureAlgorithmsWhenJwkSetSpecifiesEdDSAAlgorithmThenUses() throws Exception {
+		JWKSource<SecurityContext> jwkSource = mock(JWKSource.class);
+		RSAKey key = new RSAKey.Builder(TestKeys.DEFAULT_PUBLIC_KEY).keyUse(KeyUse.SIGNATURE)
+			.algorithm(JWSAlgorithm.EdDSA)
+			.build();
+		given(jwkSource.get(any(JWKSelector.class), isNull())).willReturn(Collections.singletonList(key));
+		Set<SignatureAlgorithm> algorithms = JwtDecoderProviderConfigurationUtils.getSignatureAlgorithms(jwkSource);
+		assertThat(algorithms).containsOnly(SignatureAlgorithm.EDDSA);
+	}
+
+	@Test
 	public void getSignatureAlgorithmsWhenJwkSetIsEmptyThenIllegalArgumentException() throws Exception {
 		JWKSource<SecurityContext> jwkSource = mock(JWKSource.class);
 		given(jwkSource.get(any(JWKSelector.class), isNull())).willReturn(Collections.emptyList());

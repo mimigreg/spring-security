@@ -93,6 +93,11 @@ public final class JwsAlgorithms {
 	 */
 	public static final String PS512 = "PS512";
 
+	/**
+	 * EdDSA (Optional)
+	 */
+	public static final String EDDSA = "EdDSA";
+
 	private JwsAlgorithms() {
 	}
 

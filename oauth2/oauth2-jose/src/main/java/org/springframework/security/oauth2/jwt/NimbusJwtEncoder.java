@@ -157,7 +157,8 @@ public final class NimbusJwtEncoder implements JwtEncoder {
 	private static JWKMatcher createJwkMatcher(JwsHeader headers) {
 		JWSAlgorithm jwsAlgorithm = JWSAlgorithm.parse(headers.getAlgorithm().getName());
 
-		if (JWSAlgorithm.Family.RSA.contains(jwsAlgorithm) || JWSAlgorithm.Family.EC.contains(jwsAlgorithm)) {
+		if (JWSAlgorithm.Family.RSA.contains(jwsAlgorithm) || JWSAlgorithm.Family.EC.contains(jwsAlgorithm)
+				|| JWSAlgorithm.Family.ED.contains(jwsAlgorithm)) {
 			// @formatter:off
 			return new JWKMatcher.Builder()
 					.keyType(KeyType.forAlgorithm(jwsAlgorithm))
